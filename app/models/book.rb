@@ -1,5 +1,5 @@
 class Book < ApplicationRecord
-  has_many :user
-  validates :title,presence:true
-  validates :body,presence:true,length:{maximum:200}
+  belongs_to :user
+  validates :title,length:{minimum:1,maximum:20},presence:true
+  validates :body,length:{maximum:200},presence:true
 end
