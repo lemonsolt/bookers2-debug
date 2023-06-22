@@ -2,12 +2,14 @@ class BooksController < ApplicationController
   before_action :ensure_correct_user, only: [:edit,:update]
 
   def show
+    session[:previous_url] = request.referer
     @book = Book.find(params[:id])
     @user = User.find(@book.user_id)
     @book_new = Book.new
   end
 
   def index
+    session[:previous_url] = request.referer
     @book = Book.new
     @books = Book.all
   end
