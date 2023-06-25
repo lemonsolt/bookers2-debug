@@ -25,16 +25,17 @@ class User < ApplicationRecord
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
 
-  # フォロー関連のメソッド(仮置き)
-  # def follow(other_user)
-  #   unless self == other_user
-  #     self.relationships.find_or_create_by(follower_id: other_user.id)
-  #   end
-  # end
-  # def unfollow(other_user)
-  #   relationship = self.relationships.find_by(follower_id: other_user.id)
-  #   relationship.destroy if relationship
-  # end
+  def self.looks(search,word)
+    if search == "perfect_match"
+      @user = User.where("name LIKE?","#{word}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?","%#{word}%")
+    else
+      @user = User.all
+    end
+  end
+
+
   def is_followed_by?(user)
     reverse_of_relationships.find_by(follower_id: user.id).present?
   end
