@@ -58,4 +58,9 @@ class BooksController < ApplicationController
       redirect_to books_path
     end
   end
+
+  def book_comment_params
+    params.require(:book_comment).permit(:comment)
+  end
+
 end
