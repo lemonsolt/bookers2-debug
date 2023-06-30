@@ -10,9 +10,11 @@ class BooksController < ApplicationController
   end
 
   def index
-    session[:previous_url] = request.referer
+    to = Time.current.at_end_of_day
+    from = (to - 6.day).at_beginning_of_day
+    @books = Book.includes(:favorites).sort_by {|x| x.favorites.where(created_at: from...to).size}.reverse
     @book = Book.new
-    @books = Book.all
+    session[:previous_url] = request.referer
   end
 
   def create
