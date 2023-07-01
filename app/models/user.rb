@@ -14,6 +14,11 @@ class User < ApplicationRecord
   has_many :reverse_of_relationships, class_name: 'Relationship',foreign_key: :followed_id
   has_many :followeds, through: :reverse_of_relationships, source: :follower
   # ここまで
+  # ここからDM関連
+  has_many :user_rooms
+  has_many :chats
+  has_many :rooms,through: :user_rooms
+  # ここまで
   has_one_attached :profile_image
 
   validates :name, length:{ minimum: 2, maximum: 20 }, uniqueness: true
